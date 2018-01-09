@@ -26,13 +26,7 @@ db.on("error", function(error) {
 
 // Main route (simple Hello World Message)
 app.get("/", function(req, res) {
-    db.news.find({}, function(error, found) {
-        var allArticlesObj = {
-            articles: found
-        };
-        console.log(allArticlesObj);
-        res.render("main", allArticlesObj);
-    });
+    res.redirect(req.baseUrl + "/all");
 });
 
 // Retrieve data from the db
@@ -102,6 +96,13 @@ app.post("/insertNotes", function(req, res) {
     var notes = req.query.notes;
     db.comments.insert({newsId:id, notes: notes}, function(error, found) {
         res.send("Insert Success!" + notes);
+    });
+});
+
+app.post("/removeNotes/:id", function(req, res) {
+    var ObjectId = mongojs.ObjectID;
+    db.comments.remove({_id:ObjectId(req.params.id)}, function(error, found) {
+        res.send("Remove Success!");
     });
 });
 
