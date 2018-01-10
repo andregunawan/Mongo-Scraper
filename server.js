@@ -65,6 +65,7 @@ app.get("/scrape", function(req, res) {
 
                 var title = $(element).children(".headline").text().replace("\n", "").replace("                    ", "").replace("                ", "");
                 var desc = $(element).children(".summary").text();
+                var link = $(element).parents(".story-link").attr("href");
 
                 db.news.insert({
                     title: title,
