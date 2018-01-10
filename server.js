@@ -32,7 +32,7 @@ app.get("/", function(req, res) {
 // Retrieve data from the db
 app.get("/all", function(req, res) {
   // Find all results from the scrapedData collection in the db
-    db.news.find({}, function(error, found) {
+    db.news.find().sort({natural:-1}, function(error, found) {
         var allArticlesObj = {
             articles: found
         };
@@ -50,24 +50,32 @@ app.get("/scrape", function(req, res) {
 
       var results = [];
       var limit = 0;
+      var getTitle = "";
 
       $(".story-meta").each(function(i, element) {
+            getTitle = $(element).children(".headline").text().replace("\n", "").replace("                    ", "").replace("                ", "");
+            return false;
+        });
+        db.news.findOne({title:getTitle}, function(error, found) {
+          if(!found)
+          {
+            $(".story-meta").each(function(i, element) {
 
-          var title = $(element).children(".headline").text().replace("\n", "").replace("                    ", "").replace("                ", "");
-          var desc = $(element).children(".summary").text();
+                var title = $(element).children(".headline").text().replace("\n", "").replace("                    ", "").replace("                ", "");
+                var desc = $(element).children(".summary").text();
 
-          db.news.insert({
-              title: title,
-              desc: desc,
-              saved: false
-          });
-          limit++;
-          if(limit === 10) return false;
-      });
-
-      // Log the results once you've looped through each of the elements found with cheerio
-      res.send("Scrape Complete");
-  });
+                db.news.insert({
+                    title: title,
+                    desc: desc,
+                    saved: false
+                });
+                limit++;
+                if(limit === 20) return false;
+            });
+            res.send("Scrape Complete");
+          }
+        });
+    });
 });
 
 app.get("/saved", function(req, res) {
@@ -77,6 +85,20 @@ app.get("/saved", function(req, res) {
         };
         console.log(allArticlesObj);
         res.render("saved_articles", allArticlesObj);
+    });
+});
+
+app.post("/saveArticle/:id", function(req, res) {
+    var ObjectId = mongojs.ObjectID;
+    db.news.findAndModify({query:{_id:ObjectId(req.params.id)}, update:{$set:{saved: true}}}, function(error, found) {
+        res.send("Save Article - Success!");
+    });
+});
+
+app.post("/deleteArticle/:id", function(req, res) {
+    var ObjectId = mongojs.ObjectID;
+    db.news.findAndModify({query:{_id:ObjectId(req.params.id)}, update:{$set:{saved: false}}}, function(error, found) {
+        res.send("Delete Article Success!");
     });
 });
 

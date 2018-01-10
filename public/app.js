@@ -46,12 +46,7 @@ function displayNews(data) {
 $("#myModal").modal("hide");
 $(".articlesNoteModal").modal("hide");
 var newsId;
-
-// $.getJSON("/all", function(data) {
-//   // Call our function to generate a table body
-//   $("#news-list").empty();
-//   displayNews(data);
-// });
+var articleID;
 
 $("#homeBtn").on("click", function () {
     $.getJSON("/all", function(data) {
@@ -126,6 +121,28 @@ $(".saveNotesBtn").on("click", function () {
         url: "/insertNotes?id=" + newsId + "&notes=" + notesText,
     }).done(function(data) {
         console.log(data);
+    })
+});
+
+$(".saveArt").on("click", function () {
+    articleID = $(this).attr("data-id");
+    $.ajax({
+        method: "POST",
+        url: "/saveArticle/" + articleID,
+    }).done(function(data) {
+        console.log(data);
+        alert("Saved!!");
+    })
+});
+
+$(".deleteArt").on("click", function () {
+    articleID = $(this).attr("data-id");
+    $.ajax({
+        method: "POST",
+        url: "/deleteArticle/" + articleID,
+    }).done(function(data) {
+        console.log(data);
+        window.location = "/saved";
     })
 });
 

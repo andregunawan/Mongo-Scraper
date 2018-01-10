@@ -10,22 +10,19 @@
 </head>
 <body>
 <div class="row">
-    <div class="col-lg-12" style="height: 85px; display: inline">
-        <div class="row">
-            <div class="col-lg-3" style="text-align: center">
-                <h1>Mongo Scraper</h1>
-            </div>
-            <div class="col-lg-1" style="height:85px; text-align: center; padding-top: 27px">
-                <a href="/all" style="font-size: 14pt" id="homeBtn">Home</a>
-            </div>
-            <div class="col-lg-2" style="height:85px; text-align: center; padding-top: 27px">
-                <a href="/saved" style="font-size: 14pt" id="savedArtBtn">Saved Articles</a>
-            </div>
-            <div class="col-lg-6" style="height:85px; padding-top: 20px">
-                <button id="scrapeBtn" class="btn btn-warning" style="font-size: 14pt">Scrape New Articles!</button>
-            </div>
-        </div>
-    </div>
+    <nav class="navbar navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav js-nav-add-active-class">
+            <li><a href="/all" style="font-size: 14pt" id="homeBtn">Home</a></li>
+            <li><a href="/saved" style="font-size: 14pt" id="savedArtBtn">Saved Articles</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right hidden-xs">
+            <a type="button" class="navbar-btn btn btn-gradient-blue" am-latosans="bold"  id="scrapeBtn" style="font-size: 14pt">Scrape New Articles!</a>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div>
+    </nav>
 </div>
 <div class="row" style="color:white; height: 500px; text-align: center; padding-top: 180px; background-image: url(images/sports.jpg); background-position: bottom">
     <h1 style="font-size: 50pt; text-shadow: 3px 3px black">MONGO SCRAPER</h1>
