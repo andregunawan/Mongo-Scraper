@@ -11,11 +11,13 @@ var app = express();
 
 app.use(express.static("public"));
 
+var port = process.env.PORT || 3000;
+
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Database configuration
-var databaseUrl = "new_york_times";
+var databaseUrl = "mongodb://heroku_4stsk567:ch0123luba1ser0v1q48ct7tk1@ds251277.mlab.com:51277/heroku_4stsk567";
 var collections = ["news"];
 
 // Hook mongojs configuration to the db variable
