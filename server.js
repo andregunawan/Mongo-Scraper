@@ -70,7 +70,8 @@ app.get("/scrape", function(req, res) {
                 db.news.insert({
                     title: title,
                     desc: desc,
-                    saved: false
+                    saved: false,
+                    link: link
                 });
                 limit++;
                 if(limit === 20) return false;
